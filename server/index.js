@@ -12,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 const PORT = 4000;
 
+
 import pg from "pg";
 const { Pool } = pg;
 const pool = new Pool({
@@ -85,7 +86,6 @@ app.get("/api/tracks/:id", (req, res) => {
 
 //--- get all tracks from artist ---
 app.get("/api/artist/:id/tracks", (req, res) => {
-  console.log(req.params.id);
   pool
     .query(
       "SELECT * FROM Tracks FULL JOIN Albums ON Tracks.album_id=Albums.album_id WHERE Tracks.artist_id=$1",
@@ -98,7 +98,8 @@ app.get("/api/artist/:id/tracks", (req, res) => {
 
 //--- get all featuring tracks from artist ---
 app.get("/api/featuring/:id", (req, res) => {
-  pool
+  try {
+    pool
     .query(
       "SELECT * FROM Tracks FULL JOIN Albums ON Tracks.album_id=Albums.album_id WHERE Tracks.featured_artist=$1",
       [req.params.id]
@@ -106,6 +107,9 @@ app.get("/api/featuring/:id", (req, res) => {
     .then((result) => {
       res.send(result.rows);
     });
+  } catch (error) {
+    console.log(error)
+  }
 });
 
 //--- get singular album ---

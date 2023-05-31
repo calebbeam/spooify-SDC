@@ -13,11 +13,12 @@ const pool = new Pool({
 // Function to generate random data for the Artists table
 function generateArtistsData() {
   const artists = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10000; i++) {
     const artist = {
       artist_id: faker.string.uuid(),
       artist_name: faker.person.fullName(),
-      followers: faker.number.int({ min: 1, max: 100000 }),
+      followers: faker.number.int({ min: 1, max: 100000 
+      }),
       image: faker.image.url(),
     };
     artists.push(artist);
@@ -28,7 +29,7 @@ function generateArtistsData() {
 // Function to generate random data for the Albums table
 function generateAlbumsData(artists) {
   const albums = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10000; i++) {
     const artist = faker.helpers.arrayElement(artists);
     const album = {
       album_id: faker.string.uuid(),
@@ -47,19 +48,25 @@ function generateAlbumsData(artists) {
 // Function to generate random data for the Tracks table
 function generateTracksData(artists, albums) {
   const tracks = [];
-  for (let i = 0; i < 100; i++) {
+  let trackIdCounter = 1; // Start with a value of 1
+
+  for (let i = 0; i < 10000; i++) {
     const artist = faker.helpers.arrayElement(artists);
     const album = faker.helpers.arrayElement(albums);
+
     const track = {
-      track_id: faker.number.int({ min: 1, max: 100000 }), // Adjust the range as needed
+      track_id: trackIdCounter, // Use the trackIdCounter as the track_id value
       name: faker.word.sample(),
       duration: faker.number.int({ min: 1, max: 10000 }),
       album_id: album.album_id,
       artist_id: artist.artist_id,
       featured_artist: faker.helpers.arrayElement(artists).artist_id,
     };
+
     tracks.push(track);
+    trackIdCounter++; // Increment the counter for the next iteration
   }
+
   return tracks;
 }
 
@@ -67,7 +74,7 @@ function generateTracksData(artists, albums) {
 // Function to generate random data for the Playlists table
 function generatePlaylistsData(tracks) {
   const playlists = [];
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 10000; i++) {
     const playlist = {
       playlist_id: faker.number.int(),
       playlist_name: faker.word.sample(),
