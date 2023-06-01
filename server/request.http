@@ -40,3 +40,6 @@ GET http://localhost:4000/api/artist/0TnOYISbd1XYRBk9myaseg/tracks
 
 ### Get all featuring tracks from artist
 GET http://localhost:4000/api/featuring/0TnOYISbd1XYRBk9myaseg
+
+### Get all featuring tracks from artist
+GET http://192.81.218.224:4000/api/featuring/0TnOYISbd1XYRBk9myaseg
